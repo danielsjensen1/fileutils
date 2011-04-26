@@ -3,11 +3,11 @@ from os.path import splitext
 
 
 class RemoteID(object):
-    def __init__(self, filename, output=False):
+    def __init__(self, filename):
         self.filename = filename
-        if output is True:
-            self.convert_file()
-            self.print_file()
+        self.id_map = {}
+        self.convert_file()
+#        self.print_file()
     
     def convert_file(self):
         with open(self.filename, 'r') as f:
@@ -16,23 +16,26 @@ class RemoteID(object):
             for row in reader:
                 new_rows = self.convertID(row)
                 self.conversion.extend(new_rows)
+        print self.id_map
     
-    @classmethod
-    def convertID(self, data):
-        rows = []
+    
+    def convertID(self, row):
+        mappedIDs = {}
 #        data = student.split(',')
 #        studentID = '"' + data[1] + '"'
-        studentID = data[1]
-        rows.append('#' + data[0] + ',' + studentID)
-        rows.append(data[0] + ',' + studentID)
+        studentID = row[1]
+        self.id_map['#' + row[0]] = studentID
+#        rows.append('#' + data[0] + ',' + studentID)
+#        rows.append(data[0] + ',' + studentID)
         try:
-            extraIDs = data[5].split(' ')
+            extraIDs = row[5].split(' ')
             for extraID in extraIDs:
-                rows.append('#' + extraID + ',' + studentID)
+#                rows.append('#' + extraID + ',' + studentID)
+                self.id_map['#' + extraID] = studentID
         except IndexError:
             #  It is OK if there aren't extra ID numbers
             pass
-        return rows
+        return mappedIDs
     
     def print_file(self):
         outputfilename = self.filename + '.converted'

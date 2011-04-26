@@ -1,4 +1,5 @@
 import unittest
+import StringIO
 from tables.remoteID import RemoteID
 
 
@@ -6,8 +7,8 @@ class TestRemoteID(unittest.TestCase):
 
     student1 = ['1ECD67B4', '0022716310', 'Taeyong', 'Ahn', 'tahn',
                 '3ECD6794 5ECD67F4 9ECD6734']
-    ans1 = ['#1ECD67B4, "0022716310"', '#3ECD6794, "0022716310"', 
-            '#5ECD67F4, "0022716310"', '#9ECD6734, "0022716310"']
+    ans1 = {'#3ECD6794': '0022716310', '#1ECD67B4': '0022716310', 
+            '#5ECD67F4': '0022716310', '#9ECD6734': '0022716310'}
     def test_convertID(self):
         conversion = RemoteID.convertID(self.student1)
         self.assertEqual(conversion, self.ans1)
