@@ -11,13 +11,18 @@ class ClickerGrades(object):
         
     def grade(self, max_score=3):
         '''This should become a function instead of a loop.'''
-        final_score = []
+        self.final_score = []
         for student, answers in self.responses:
             score = min(max_score, sum(i == j for i, j in zip(answers, self.key)))
             print student, score
+            self.final_score.append((student, score))
                     
+    def output_CHIP(self, filename):
+        with open(filename, 'wb') as f:
+            writer = csv.writer(f)
+            writer.writerows(self.final_score)
 
-#    char.array([['a','b','c'],['a','c','c'],['b','c','c']])
+
     def parse_file(self, header=10):
         '''This is a horribly inefficient method that should be replaced with a database.'''
         with open(self.filename, 'r') as f:
