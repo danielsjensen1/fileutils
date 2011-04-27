@@ -24,14 +24,14 @@ class RemoteID(object):
 #        data = student.split(',')
 #        studentID = '"' + data[1] + '"'
         studentID = row[1]
-        self.id_map['#' + row[0]] = studentID
+        self.id_map['#' + row[0].lstrip('0')] = studentID
 #        rows.append('#' + data[0] + ',' + studentID)
 #        rows.append(data[0] + ',' + studentID)
         try:
             extraIDs = row[5].split(' ')
             for extraID in extraIDs:
 #                rows.append('#' + extraID + ',' + studentID)
-                self.id_map['#' + extraID] = studentID
+                self.id_map['#' + extraID.lstrip('0')] = studentID
         except IndexError:
             #  It is OK if there aren't extra ID numbers
             pass
