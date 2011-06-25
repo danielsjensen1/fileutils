@@ -17,5 +17,5 @@ def grade_class(directory):
         session.output_CHIP(outputname)
 
 if __name__ == '__main__':
-    directory = '/home/dsj9/Grades/iclicker Win/Classes/Electrodynamics-241-23'
+    directory = '/home/dsj9/Grades/iclicker Win/Classes/Electrodynamics-241-16'
     grade_class(directory)
