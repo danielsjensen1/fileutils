@@ -21,11 +21,23 @@ class ClickerWithKey(ClickerGrades):
 from tables.remoteID import RemoteID
 from os.path import join
 if __name__ == '__main__':
-    grading = '/home/dsj9/Dropbox/Physics/Electrodynamics/Giordano/Recitations/Grades/clicker'
+    grading = '/home/jensend/Dropbox/Physics/Electrodynamics/Giordano/Recitations/Grades/clicker'
     remoteID = RemoteID(join(grading, 'RemoteID.csv'))
-    quiz03 = ClickerWithKey(join(grading, 'L1106211049.csv'), remoteID)
-    quiz03.grade('BCC', (2,1,2))
-    quiz03.output_CHIP(join(grading, 'upload03.csv'))
+    quizzes = (('L1106211049.csv', 'BCC', (2,1,2), 'upload03.csv'),
+               ('L1106231051.csv', 'CCCD', (1,1,1,2), 'upload04.csv'),
+               ('L1106281050.csv', 'BBA', (2,1,2), 'upload05.csv'),
+               ('L1106301049.csv', 'CBB', (1,2,2), 'upload06.csv'))
+    for quiz in quizzes:
+        filename, key, scoring, upfilename = quiz
+        clicker = ClickerWithKey(join(grading, filename), remoteID)
+        clicker.grade(key, scoring)
+        clicker.output_CHIP(join(grading, upfilename))
+#    quiz03 = ClickerWithKey(join(grading, 'L1106211049.csv'), remoteID)
+#    quiz03.grade('BCC', (2,1,2))
+#    quiz03.output_CHIP(join(grading, 'upload03.csv'))
 #    quiz04 = ClickerWithKey(join(grading, 'L1106231051.csv'), remoteID)
 #    quiz04.grade('CCCD', (1,1,1,2))
 #    quiz04.output_CHIP(join(grading, 'upload04.csv'))
+#    quiz05 = ClickerWithKey(join(grading, 'L1106281050.csv'), remoteID)
+#    quiz05.grade('BBA', (2,1,2))
+#    quiz05.output_CHIP(join(grading, 'upload05.csv'))
