@@ -1,4 +1,4 @@
-from tables.clicker_grades import ClickerGrades
+from clicker_grades import ClickerGrades
 
 
 class ClickerWithKey(ClickerGrades):
@@ -18,15 +18,22 @@ class ClickerWithKey(ClickerGrades):
             self.final_score.append((student, score))
 
 
-from tables.remoteID import RemoteID
+from remoteID import RemoteID
 from os.path import join
 if __name__ == '__main__':
-    grading = '/home/jensend/Dropbox/Physics/Electrodynamics/Giordano/Recitations/Grades/clicker'
+#    grading = '/home/jensend/Dropbox/Physics/Electrodynamics/Giordano/Recitations/Grades/clicker'
+    grading = '/home/daniel/Dropbox/Physics/Electrodynamics/Giordano/Recitations/Grades/clicker'
     remoteID = RemoteID(join(grading, 'RemoteID.csv'))
     quizzes = (('L1106211049.csv', 'BCC', (2,1,2), 'upload03.csv'),
                ('L1106231051.csv', 'CCCD', (1,1,1,2), 'upload04.csv'),
                ('L1106281050.csv', 'BBA', (2,1,2), 'upload05.csv'),
-               ('L1106301049.csv', 'CBB', (1,2,2), 'upload06.csv'))
+               ('L1106301049.csv', 'CBB', (1,2,2), 'upload06.csv'),
+               ('L1107121044.csv', 'ACBC', (1,1,1,2), 'upload07.csv'),
+               ('L1107141050.csv', 'C', (5,), 'upload08.csv'),
+               ('L1107191045.csv', 'CCD', (2,1,2), 'upload09.csv'),
+               ('L1107211045.csv', 'BAA', (2,2,1), 'upload10.csv'),
+               ('L1107261049.csv', 'CDAB', (1,1,1,2), 'upload11.csv'),
+               ('L1107281050.csv', 'ACD', (2,1,2), 'upload12.csv'))
     for quiz in quizzes:
         filename, key, scoring, upfilename = quiz
         clicker = ClickerWithKey(join(grading, filename), remoteID)

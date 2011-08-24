@@ -24,7 +24,9 @@ class RemoteID(object):
 #        data = student.split(',')
 #        studentID = '"' + data[1] + '"'
         studentID = row[1]
-        self.id_map['#' + row[0].lstrip('0')] = studentID
+        #  You used to need to strip the leading zeros but not with the new version
+#        self.id_map['#' + row[0].lstrip('0')] = studentID
+        self.id_map['#' + row[0]] = studentID
 #        rows.append('#' + data[0] + ',' + studentID)
 #        rows.append(data[0] + ',' + studentID)
         try:

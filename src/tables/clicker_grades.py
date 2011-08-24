@@ -23,13 +23,13 @@ class ClickerGrades(object):
             writer.writerows(self.final_score)
 
 
-    def parse_file(self, header=10):
+    def parse_file(self, header=5):
         '''This is a horribly inefficient method that should be replaced with a database.'''
         with open(self.filename, 'r') as f:
             self.responses = []
             reader = csv.reader(f)
             self.conversion = []
-            for i in range(10): reader.next()
+            for i in range(header): reader.next()
             for row in reader:
                 try:
 #                    print(self.id_map[row[0]] + row[3:-1:6])
@@ -53,7 +53,7 @@ class ClickerGrades(object):
 #                new_rows = self.convertID(row)
 #                self.conversion.extend(new_rows)
 
-from tables.remoteID import RemoteID
+from remoteID import RemoteID
 if __name__ == '__main__':
     remoteID_13 = RemoteID('/home/dsj9/Grades/iclicker Win/Classes/Electrodynamics-241-13/RemoteID.csv')
     section13 = ClickerGrades('/home/dsj9/Grades/iclicker Win/Classes/Electrodynamics-241-13/SessionData/L1104201126.csv', remoteID_13)
