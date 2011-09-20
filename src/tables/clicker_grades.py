@@ -9,14 +9,17 @@ class ClickerGrades(object):
         self.majority_key()
         self.grade()
         
-    def grade(self, max_score=3):
+    def grade(self, max_score=5, participation=5):
         '''This should become a function instead of a loop.'''
         self.final_score = []
         for student, answers in self.responses:
-            score = min(max_score, sum(i == j for i, j in zip(answers, self.key)))
+            score = sum(i == j for i, j in zip(answers, self.key))
+            #  Renormalize the score
+            score = score * max_score / float(len(self.key)) + participation
             print student, score
-            self.final_score.append((student, score))
-                    
+            #  Round final score to hundredths place
+            self.final_score.append((student, '{0:.2f}'.format(score)))
+
     def output_CHIP(self, filename):
         with open(filename, 'wb') as f:
             writer = csv.writer(f)
