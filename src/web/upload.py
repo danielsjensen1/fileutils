@@ -27,13 +27,39 @@ class Upload(object):
         self.browser.submit()
         print('Authenticated')
     
-    def upload(self, url, file):
+    def upload(self, url, section, filename, quizname):
         '''Upload file to CHIP'''
         self.browser.open(url)
-        for form in self.browser.forms():
-            print form
-        page = self.browser.response().read()
-        print(page)
+#        for form in self.browser.forms():
+#            print form
+#        page = self.browser.response().read()
+        self.browser.select_form(nr=3) #  Section selection form
+        self.browser.form['secsel']=[section]
+        self.browser.form['stype']=['Recitation quizzes']
+#        self.browser.form['extype']=[quizname]
+        resp = self.browser.submit(nr=0) #  Click on the first button
+#        print(self.browser.response().read())
+        #  We are on the section select page
+        self.browser.select_form(nr=2)
+        self.browser.form['sname']=[quizname]
+        resp = self.browser.submit(nr=2)  #  tell it to import character delimited data
+        #  We are now on the file selection page
+        self.browser.select_form(nr=2)
+        self.browser.form.add_file(open(filename), 'text/plain', filename)
+        resp = self.browser.submit(nr=0)
+        #  We made it to the final upload page
+        self.browser.select_form(nr=2) 
+        print(self.browser.form)
+        self.browser.form['ssnat']='1'
+        self.browser.form['gradechars']='4'
+        self.browser.form['delim']=[',']
+        self.browser.form['more']=['0']
+        resp = self.browser.submit(nr=0)
+        #  Last page, tell it to import for real
+        self.browser.select_form(nr=2)
+        resp = self.browser.submit(nr=1)
+#        print(self.browser.response().read())
+#        print(page)
 #        soup = BeautifulSoup(page)
 #        tags = soup.findAll('a', {'href' : re.compile('\.' + filetype)})
 #        print tags
@@ -55,4 +81,7 @@ if __name__ == '__main__':
     url_login = 'https://www.purdue.edu/apps/account/cas/login'
     url_gradebook = "https://chip.physics.purdue.edu/cgi-bin/241/fall2011/Instructorgradebook/gbins"
     sample = Upload(url_gradebook)
-    sample.upload(url_gradebook, '/tmp/blah')
+    for i in range(1, 13):
+        sample.upload(url_gradebook, 'R06', 
+                      '/home/daniel/Dropbox/Physics/Electrodynamics/Physics241/Grades/Section06/Upload/Rlqz{0:02d}.csv'.format(i), 
+                      'Rlqz{0:02d}'.format(i))

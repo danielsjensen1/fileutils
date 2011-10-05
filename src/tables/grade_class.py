@@ -13,7 +13,7 @@ def grade_class(directory):
     for i, file in enumerate(files):
         inputname = os.path.join(datadir, file)
         session = ClickerGrades(inputname, remoteID)
-        outputname = os.path.join(outputdir, 'Rlqz' + str(i + 1) + '.csv')
+        outputname = os.path.join(outputdir, 'Rlqz{0:02d}.csv'.format(i+1))
         session.output_CHIP(outputname)
 
 if __name__ == '__main__':
