@@ -81,7 +81,8 @@ if __name__ == '__main__':
     url_login = 'https://www.purdue.edu/apps/account/cas/login'
     url_gradebook = "https://chip.physics.purdue.edu/cgi-bin/241/fall2011/Instructorgradebook/gbins"
     sample = Upload(url_gradebook)
-    for i in range(1, 13):
-        sample.upload(url_gradebook, 'R06', 
-                      '/home/daniel/Dropbox/Physics/Electrodynamics/Physics241/Grades/Section06/Upload/Rlqz{0:02d}.csv'.format(i), 
+#    for i in range(1, 13):
+    for i in range(23, 29+1):
+        sample.upload(url_gradebook, 'R11', 
+                      '/home/daniel/Dropbox/Physics/Electrodynamics/Physics241/Grades/Section11/Upload/Rlqz{0:02d}.csv'.format(i), 
                       'Rlqz{0:02d}'.format(i))

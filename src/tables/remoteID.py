@@ -33,7 +33,8 @@ class RemoteID(object):
             extraIDs = row[5].split(' ')
             for extraID in extraIDs:
 #                rows.append('#' + extraID + ',' + studentID)
-                self.id_map['#' + extraID.lstrip('0')] = studentID
+#                self.id_map['#' + extraID.lstrip('0')] = studentID
+                self.id_map['#' + extraID] = studentID
         except IndexError:
             #  It is OK if there aren't extra ID numbers
             pass
