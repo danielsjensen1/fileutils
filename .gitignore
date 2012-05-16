@@ -1,2 +1,4 @@
+.pydev*
+.settings/
 *.pyc
 *.pyo
