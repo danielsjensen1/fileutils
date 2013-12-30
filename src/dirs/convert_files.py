@@ -19,9 +19,9 @@ class ConvertFiles(object):
                 except os.error:
                     print('{} cannot be created'.format(outputdir))
                     raise
-        #  We should probably run a check on inputdir to make sure it is normalized 
+        #  We should probably run a check on inputdir to make sure it is normalized
         self.N = len(inputdir) + 1
-    
+
     def walk(self):
         for root, folders, filenames in os.walk(self.inputdir, topdown=True):
             for folder in folders:
@@ -36,18 +36,18 @@ class ConvertFiles(object):
                 ext = ext.lower()
                 if ext == self.inputext:
                     inpath = os.path.join(root, filename)
-                    outpath = os.path.join(self.outputdir, root[self.N:], 
+                    outpath = os.path.join(self.outputdir, root[self.N:],
                                        name + self.outputext)
                     yield inpath, outpath
-                    
-                
+
+
 
 class FlacToOgg(ConvertFiles):
     def __init__(self, inputdir=None, outputdir=None):
         ConvertFiles.__init__(self, '.flac', '.ogg', inputdir, outputdir)
-    
+
     def __call__(self, quality=5):
-        # add support for --quiet flag 
+        # add support for --quiet flag
         for inpath, outpath in self.walk():
             subprocess.check_call(['oggenc', inpath, '-q {}'.format(quality),
                                    '-o', outpath])
@@ -57,8 +57,9 @@ if __name__ == '__main__':
 #    outputdir = os.path.join(os.getcwd(), 'test', 'outputaudio')
 #    converter = FlacToOgg(inputdir, outputdir)
 #    converter(quality=3)
-    
-    inputdir = '/entertainment/audio/flac'
-    outputdir = os.path.expanduser('~/Music')
+
+#     inputdir = '/entertainment/audio/flac'
+    inputdir = os.path.expanduser('~/Music')
+    outputdir = os.path.expanduser('~/ogg')
     converter = FlacToOgg(inputdir, outputdir)
     converter(quality=5)
