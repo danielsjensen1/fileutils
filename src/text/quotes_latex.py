@@ -51,9 +51,9 @@ if __name__ == '__main__':
 \topskip0pt
 \StripedBorder
 \vfill
-\huge
+\vspace*{\fill}
 """
-    suffix = r"""\vfill
+    suffix = r"""\vspace*{\fill}
 """
     print latex_quotes(expanduser('~/Downloads/quotes/jensen_latex.tex'),
                        quotes, prefix=prefix, suffix=suffix)
