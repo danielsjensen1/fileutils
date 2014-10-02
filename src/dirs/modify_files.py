@@ -3,7 +3,7 @@ from os.path import splitext
 from os import rename, remove
 
 
-def ghostscript(filenames, combine=False, name='finished.pdf', replace=False):
+def ghostscript(filenames, combine=False, name='combined.pdf', replace=False):
     """
     Process one or more files using Ghostscript.  
     
