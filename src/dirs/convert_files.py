@@ -52,14 +52,29 @@ class FlacToOgg(ConvertFiles):
             subprocess.check_call(['oggenc', inpath, '-q {}'.format(quality),
                                    '-o', outpath])
 
+
+class FlacToMp3(ConvertFiles):
+    def __init__(self, inputdir=None, outputdir=None):
+        ConvertFiles.__init__(self, '.flac', '.mp3', inputdir, outputdir)
+
+    def __call__(self, quality=0):
+        # add support for --quiet flag
+        for inpath, outpath in self.walk():
+            print("inpath=", inpath)
+            print("outpath=", outpath)
+            subprocess.check_call(['ffmpeg', '-i', inpath, '-qscale:a', '{}'.format(quality),
+                                   outpath])
+
+
 if __name__ == '__main__':
 #    inputdir = os.path.join(os.getcwd(), 'test', 'inputaudio')
 #    outputdir = os.path.join(os.getcwd(), 'test', 'outputaudio')
 #    converter = FlacToOgg(inputdir, outputdir)
 #    converter(quality=3)
 
-#     inputdir = '/entertainment/audio/flac'
-    inputdir = os.path.expanduser('~/Music')
-    outputdir = os.path.expanduser('~/ogg')
-    converter = FlacToOgg(inputdir, outputdir)
-    converter(quality=5)
+    inputdir = '/mnt/entertainment/audio/flac'
+    # inputdir = os.path.expanduser('~/Music/flac')
+    outputdir = os.path.expanduser('~/mp3')
+    # converter = FlacToOgg(inputdir, outputdir)
+    converter = FlacToMp3(inputdir, outputdir)
+    converter()
