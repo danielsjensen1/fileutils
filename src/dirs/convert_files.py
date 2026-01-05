@@ -1,4 +1,5 @@
 import os, subprocess
+import shutil
 
 
 class ConvertFiles(object):
@@ -60,10 +61,18 @@ class FlacToMp3(ConvertFiles):
     def __call__(self, quality=0):
         # add support for --quiet flag
         for inpath, outpath in self.walk():
-            print("inpath=", inpath)
-            print("outpath=", outpath)
             subprocess.check_call(['ffmpeg', '-i', inpath, '-qscale:a', '{}'.format(quality),
                                    outpath])
+
+
+class CopyAlbumArt(ConvertFiles):
+    def __init__(self, inputdir=None, outputdir=None):
+        ConvertFiles.__init__(self, '.jpg', '.jpg', inputdir, outputdir)
+
+    def __call__(self):
+        # add support for --quiet flag
+        for inpath, outpath in self.walk():
+            shutil.copyfile(inpath, outpath)
 
 
 if __name__ == '__main__':
@@ -73,8 +82,10 @@ if __name__ == '__main__':
 #    converter(quality=3)
 
     inputdir = '/mnt/entertainment/audio/flac'
-    # inputdir = os.path.expanduser('~/Music/flac')
-    outputdir = os.path.expanduser('~/mp3')
-    # converter = FlacToOgg(inputdir, outputdir)
-    converter = FlacToMp3(inputdir, outputdir)
+    inputdir = os.path.expanduser('~/Music/flac')
+    outputdir = os.path.expanduser('~/Music/ogg2')
+    converter = FlacToOgg(inputdir, outputdir)
+    # converter = FlacToMp3(inputdir, outputdir)
+    converter()
+    converter = CopyAlbumArt(inputdir, outputdir)
     converter()
